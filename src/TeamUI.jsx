@@ -127,8 +127,9 @@ function GuestCard({ guest, fetchGuests }) {
   };
 
   // Enhanced Box Styling: Deep shadow, thicker border
-  return (
-    <div className="bg-white rounded-xl shadow-md border-2 border-gray-200 overflow-hidden mb-6">
+  // Enhanced Box Styling: Deep shadow, thicker border
+return (
+  <div className="bg-white rounded-xl shadow-md border-2 border-gray-200 overflow-hidden mb-6">
       <div style={{ backgroundColor: colors.bg, color: colors.text }} className="p-3 text-center font-bold text-lg transition-colors border-b-2 border-gray-200">
         👤 {guest.guest_name}
       </div>
