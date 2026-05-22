@@ -122,12 +122,12 @@ function GuestCard({ guest, fetchGuests }) {
   };
 
   const getWhatsAppUrl = () => {
-    const msg = `*${localData.lounge}*\n${guest.guest_name}\n📺 LMW: ${localData.lmw_status}\n💻 IP Demo: ${localData.demo_status}\n⏳ Ready for Vyas: ${localData.ready_to_meet_gurudev ? '✅' : '❌'}\n🤝 Met Gurudev: ${localData.met_gurudev ? '✅' : '❌'}`;
+    const msg = `*${localData.lounge}*\n${guest.guest_name}\n📺 LMW: ${localData.lmw_status}\n💻 IP Demo: ${localData.demo_status}\n⏳ Ready: ${localData.ready_to_meet_gurudev ? '✅' : '❌'}\n🤝 Met Gurudev: ${localData.met_gurudev ? '✅' : '❌'}`;
     return `https://wa.me/?text=${encodeURIComponent(msg)}`;
   };
 
+  // Enhanced Box Styling: Deep shadow, thicker border
   return (
-    {/* Enhanced Box Styling: Deep shadow, thicker border */}
     <div className="bg-white rounded-xl shadow-md border-2 border-gray-200 overflow-hidden mb-6">
       <div style={{ backgroundColor: colors.bg, color: colors.text }} className="p-3 text-center font-bold text-lg transition-colors border-b-2 border-gray-200">
         👤 {guest.guest_name}
@@ -151,76 +151,3 @@ function GuestCard({ guest, fetchGuests }) {
           <div className="bg-gray-50 p-3 rounded-lg border-2 border-gray-200 space-y-3">
             {(tempPhoto || guest.photo_data) ? (
               <img src={`data:image/jpeg;base64,${tempPhoto || guest.photo_data}`} alt="Guest" className="w-full rounded-lg shadow-sm border" />
-            ) : (
-              <p className="text-sm text-gray-500 text-center font-medium">No photo captured.</p>
-            )}
-            <input type="file" accept="image/*" capture="environment" className="w-full text-sm font-medium" onChange={handlePhotoCapture} />
-            {tempPhoto && <button onClick={savePhoto} className="w-full bg-blue-600 text-white py-2 rounded-md font-bold">💾 Save Photo</button>}
-          </div>
-        )}
-
-        {/* 3-State Segmented Controls (Now with stark contrast for the "ON" state) */}
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <p className="text-xs text-gray-500 font-bold mb-1 uppercase tracking-wide">📺 LMW</p>
-            <div className="flex bg-gray-100 p-1 rounded-lg border-2 border-gray-200">
-              {['Not yet', 'Started', 'Done'].map(status => (
-                <button 
-                  key={status} 
-                  onClick={() => handleUpdate('lmw_status', status)} 
-                  className={`flex-1 text-xs py-2 rounded-md font-bold transition-all ${
-                    localData.lmw_status === status 
-                      ? 'bg-blue-600 text-white shadow-md transform scale-105' // Highly visible ON state
-                      : 'text-gray-500 hover:bg-gray-200' // Faded OFF state
-                  }`}
-                >
-                  {status}
-                </button>
-              ))}
-            </div>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500 font-bold mb-1 uppercase tracking-wide">💻 IP Demo</p>
-            <div className="flex bg-gray-100 p-1 rounded-lg border-2 border-gray-200">
-              {['Not yet', 'Started', 'Done'].map(status => (
-                <button 
-                  key={status} 
-                  onClick={() => handleUpdate('demo_status', status)} 
-                  className={`flex-1 text-xs py-2 rounded-md font-bold transition-all ${
-                    localData.demo_status === status 
-                      ? 'bg-blue-600 text-white shadow-md transform scale-105' // Highly visible ON state
-                      : 'text-gray-500 hover:bg-gray-200' // Faded OFF state
-                  }`}
-                >
-                  {status}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Binary Toggles (Auto-saving) */}
-        <div className="grid grid-cols-2 gap-4">
-          <label className={`flex items-center justify-center gap-2 p-3 rounded-lg border-2 cursor-pointer select-none transition-all ${localData.ready_to_meet_gurudev ? 'bg-blue-50 border-blue-300' : 'bg-gray-50 border-gray-200'}`}>
-            <input type="checkbox" checked={localData.ready_to_meet_gurudev} onChange={(e) => handleUpdate('ready_to_meet_gurudev', e.target.checked)} className="w-5 h-5 text-blue-600 rounded" />
-            <span className="text-sm font-bold">⏳ Ready</span>
-          </label>
-          <label className={`flex items-center justify-center gap-2 p-3 rounded-lg border-2 cursor-pointer select-none transition-all ${localData.met_gurudev ? 'bg-blue-50 border-blue-300' : 'bg-gray-50 border-gray-200'}`}>
-            <input type="checkbox" checked={localData.met_gurudev} onChange={(e) => handleUpdate('met_gurudev', e.target.checked)} className="w-5 h-5 text-blue-600 rounded" />
-            <span className="text-sm font-bold">🤝 Met Gurudev</span>
-          </label>
-        </div>
-
-        {/* Action Buttons (Save removed, 2 columns instead of 3) */}
-        <div className="flex gap-3 pt-4 border-t-2 border-gray-100">
-          <a href={getWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="flex-1 bg-green-50 text-green-700 border-2 border-green-200 hover:bg-green-100 text-center text-sm font-bold py-3 rounded-lg shadow-sm transition-colors flex items-center justify-center">
-            📲 WhatsApp
-          </a>
-          <button onClick={markComplete} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-3 rounded-lg shadow-sm transition-colors flex items-center justify-center">
-            ✅ Complete
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
