@@ -210,3 +210,4 @@ function GuestCard({ guest, fetchGuests }) {
     </div>
   );
 }
+}
